@@ -1,8 +1,8 @@
 # List of the commands:
 ** Commad to use everyting ./brainrot-ascii
- # OUTPUT OPTIONS
- -o, --output FILE Save ASCII to file instead of stdout
- -f, --format FORMAT Output format (text,html,ansi) [default: text]
+ # OUTPUT OPTIONS:
+  -o, --output FILE Save ASCII to file instead of stdout
+  -f, --format FORMAT Output format (text,html,ansi) [default: text]
 
 # DIMENSIONS:
     -w, --width INT ASCII width in characters set to use [default: 8]
