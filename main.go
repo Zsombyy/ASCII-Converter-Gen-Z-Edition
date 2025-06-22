@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	VERSION  = "2.0.0"
+	VERSION  = "1.0.0"
 	APP_NAME = "brainrot-ascii"
 )
 
