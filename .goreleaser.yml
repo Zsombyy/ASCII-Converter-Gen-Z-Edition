@@ -1,0 +1,65 @@
+project_name: brainrot-ascii
+dist: dist
+env:
+- CGO_ENABLED=0
+
+before: 
+  hooks:
+  - go mod download
+  - go generate ./..
+  - go vet ./...
+
+  build:
+  - id: "main"
+  main: main.go
+  goos: [linux, windows, darwin, freebsd, openbsd, netbsd]
+  goarm: [6, 7] # ARMv6/7
+  tags:
+  - netgo
+  - osusergo
+  ldflags:
+  - -s -w
+  - -X main.version={{.Version}}
+  - -X .main.commit={{.Commit}}
+  - -X main.date={{.Date}}
+  flags:
+  - -trimpath
+  mod: vendor
+
+  archives:
+  - format: tar.gz
+  name_template: "{{.ProjectName}}_{{.Versoin}}_{{.Os}}_{{.Arch}}"
+  files:
+  - LICENSE
+  - README.md
+  - dev.cubxy.yml
+  replacements:
+  darwin: macos
+  386: x86
+
+  checksum:
+  name_template: "{{.ProjectName}}_{{.Version}}_checksum.txt"
+  algorithm: sha256
+  
+  nfpms:
+  - package_name: brainrot-ascii
+  maintainer: "Cubxy (Zsombyy) info@cubxy.dev"
+  descirption: "brainrotted ASCII art Converter"
+  license: "GPL-3.0"
+  homepage: "https://github.com/Zsombyy/ASCII-Converter-GenZ-Edition/tree/main"
+  formats: [deb,r rpm, apk]
+  contents:
+      - src: "{{ .Artifacts.Where (eq .Type \"Binary\").First.Path }}"
+        dst: /usr/bin/brainrot-converter
+  dependencies:
+      - libpng16
+      - libjpeg-turbo
+  scripts:
+      postinstall: scripts/postinstall.sh
+      preremove: scripts/preremove.sh
+
+release:
+  github:
+    owner: hackclub
+    name: genz-ascii-converter
+  draft: false
