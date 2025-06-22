@@ -27,4 +27,4 @@ This made specially for the Hackclub Summer event so the updates are not fully *
 
 
 If you are want to know how to use the application
-You can see [here] (https://github.com/Zsombyy/ASCII-Converter-GenZ-Edition/blob/main/guide.md)
+You can see [here](https://github.com/Zsombyy/ASCII-Converter-GenZ-Edition/blob/main/guide.md)
