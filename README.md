@@ -3,8 +3,8 @@
 **Before Installtion**
 
 The Application has only officially UNIX based operating system support like any Linux distribution BSD and MacOS
-If you are a Windows user we are not guarantee the stablity and the operation of the application we are not giving any support for Windows
-In Windows the application can be unstable not will work at all because we write the application for the Terminal and Windows does not have the terminal commands to be fine to work that's why we will not give support the Windows users
+If you are a Windows user we are not guarantee the stablity and the operation of the application we are not giving any support for Windowsi 
+in Windows the application can be unstable not will work at all because we write the application for the Terminal and Windows does not have the terminal commands to be fine to work that's why we will not give support the Windows users
 
 
 
