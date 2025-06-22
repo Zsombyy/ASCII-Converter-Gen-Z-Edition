@@ -18,7 +18,7 @@ In Windows the application can be unstable not will work at all because we write
 - NixOS
 - MacOS
 - FreeBSD
-- ***Windows but not guaranteed we just build for Windows too**
+- ***Windows but not guaranteed we just build for Windows too***
 
 
 **Important note**
