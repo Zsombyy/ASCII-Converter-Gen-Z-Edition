@@ -19,7 +19,6 @@ in Windows the application can be unstable not will work at all because we write
 - NixOS
 - MacOS
 - FreeBSD
-- ***Windows under working currently does not work we will fork for windows***
 
 
 **Important note**
