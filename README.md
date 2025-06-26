@@ -76,5 +76,3 @@ Hit me up:
 * Email: [info@cubxy.dev](mailto:info@cubxy.dev)
 
 ---
-
-Let me know if you want a version with emoji removed or adapted for a terminal-friendly `README.md`.
