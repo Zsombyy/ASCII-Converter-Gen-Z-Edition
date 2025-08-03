@@ -1,12 +1,3 @@
-# 🚀 Quick Start
-
-After running the Python installer, you're immediately ready:
-
-```bash
-# Use any of these aliases (auto-configured)
-br              # Quick brainrot mode
-brmax           # Maximum chaos (BRAINROT_LEVEL=10)
-brquiet         # Silent mode for scripting
 
 # Or use the full binary path
 ./ASCII-Converter-Gen-Z-Edition/brainrot-ascii
