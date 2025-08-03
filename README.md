@@ -1,7 +1,5 @@
+# 🚀 Quick Start
 
-# Or use the full binary path
-./ASCII-Converter-Gen-Z-Edition/brainrot-ascii
-```
 
 **The installer puts everything exactly where you need it.** Just restart your shell and go wild! 🎉# ⚠️ Things You Need to Know Before Installing
 
