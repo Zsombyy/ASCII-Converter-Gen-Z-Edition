@@ -324,7 +324,6 @@ class RustInstaller:
         # Ensure cargo is available
         if not self.detector.command_exists('cargo'):
             if self.cargo_env.exists():
-                # Try to source cargo env
                 cargo_bin = Path.home() / '.cargo' / 'bin'
                 os.environ['PATH'] = f"{cargo_bin}:{os.environ.get('PATH', '')}"
                 
@@ -335,18 +334,15 @@ class RustInstaller:
                 Logger.error("Cargo not found and ~/.cargo/env doesn't exist")
                 return False
         
-        # Create temporary project
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
             
             Logger.info("Creating temporary Cargo project...")
             
             try:
-                # Initialize cargo project
                 subprocess.run(['cargo', 'init', '--name', 'temp_deps_installer', '--bin'], 
                              cwd=temp_path, check=True, capture_output=True)
                 
-                # Add dependencies to Cargo.toml
                 cargo_toml = temp_path / 'Cargo.toml'
                 with open(cargo_toml, 'a') as f:
                     f.write('\n[dependencies]\n')
@@ -373,7 +369,6 @@ class ShellConfigurer:
         """Get list of shell configuration files to update"""
         configs = []
         
-        # Bash
         bashrc = self.home / '.bashrc'
         bash_profile = self.home / '.bash_profile'
         if bashrc.exists():
@@ -381,12 +376,10 @@ class ShellConfigurer:
         elif bash_profile.exists():
             configs.append(bash_profile)
         
-        # Zsh
         zshrc = self.home / '.zshrc'
         if zshrc.exists():
             configs.append(zshrc)
         
-        # Fish
         fish_config = self.home / '.config' / 'fish' / 'config.fish'
         if fish_config.exists():
             configs.append(fish_config)
@@ -403,7 +396,6 @@ class ShellConfigurer:
         
         for config_file in configs:
             try:
-                # Check if cargo path already exists
                 with open(config_file, 'r') as f:
                     content = f.read()
                 
@@ -411,7 +403,6 @@ class ShellConfigurer:
                     Logger.success(f"Cargo path already configured in {config_file}")
                     continue
                 
-                # Add cargo to PATH based on shell type
                 if config_file.name == 'config.fish':
                     path_line = 'set -gx PATH $HOME/.cargo/bin $PATH\n'
                 else:
@@ -431,45 +422,43 @@ def main():
         Logger.info("Starting Universal Dependencies Installer")
         Logger.info("Target dependencies: Rust, tar, flate2")
         Logger.info("Supported distro families: Arch, openSUSE, Debian, Fedora")
-        
-        # Check if running as root
-        if os.geteuid() == 0:
+
+        # Detect Windows and exit
+        if os.name == "nt":
+            Logger.error("Windows is not supported. Try WSL or a Linux distro.")
+            sys.exit(1)
+
+        # Check if running as root (only on Unix-like systems)
+        if hasattr(os, "geteuid") and os.geteuid() == 0:
             Logger.warning("Running as root. This may cause issues with Rust installation.")
             response = input("Continue anyway? [y/N]: ").strip().lower()
             if response not in ['y', 'yes']:
                 Logger.info("Installation cancelled.")
                 return
         
-        # Choose distro family
         distro_family = DistroDetector.choose_distro_family()
         Logger.info(f"Selected distro family: {distro_family}")
         
-        # Install system dependencies
         package_installer = PackageInstaller(distro_family)
         if not package_installer.install_system_dependencies():
             Logger.error("Failed to install system dependencies")
             sys.exit(1)
         
-        # Install Rust
         rust_installer = RustInstaller()
         if not rust_installer.install_rust():
             Logger.error("Failed to install Rust")
             sys.exit(1)
         
-        # Install Rust dependencies
         if not rust_installer.install_rust_dependencies():
             Logger.error("Failed to install Rust dependencies")
             sys.exit(1)
         
-        # Update shell configurations
         shell_configurer = ShellConfigurer()
         shell_configurer.update_shell_configs()
         
-        # Final success message
         Logger.success("All dependencies installed successfully!")
         Logger.info("You can now use Rust with tar and flate2 crates in your projects")
         
-        # Show versions if available
         detector = DistroDetector()
         if detector.command_exists('rustc'):
             Logger.info("Installed versions:")
